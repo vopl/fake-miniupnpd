@@ -1,0 +1,17 @@
+
+Для тестирования NAT-PMP/PCP/IGDP клиентов - симулятор сервиса проброса портов на основе MiniUPnPd, http://miniupnp.free.fr/, https://miniupnp.tuxfamily.org/ .
+
+В оригинальном MiniUPnPd подменен слой nftables, вместо него вкорячен собственный автономный менеджер фейковых правил, живущий внутри процесса MiniUPnPd, не проявляющий внешних побочных эффектов и не имеющий внешних зависимостей. Так же, забанено чтение внешнего конфигурационного файла /etc/miniupnpd.conf. Может и будет глючить.
+
+На момент создания версия MiniUPnPd была 2.1
+
+Примерное использование:
+git clone ...
+git submodule update --init
+mkdir build
+cd build
+cmake ../fake-miniupnp/CMakeLists.txt
+make
+./fake-miniupnpd -d -a lo -i lo -o 1.2.3.4 -N -A "allow 1024-65535 0.0.0.0/0 1024-65535"
+
+Лицензия WTFPL.
